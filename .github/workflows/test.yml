@@ -1,1 +1,28 @@
+name: Daily Auto Login
 
+on:
+  schedule:
+    - cron: '5 16 * * *'  # UTC时间16:05 = 北京时间00:05
+  workflow_dispatch:
+
+jobs:
+  auto-login:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Login Script
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: python login.py
