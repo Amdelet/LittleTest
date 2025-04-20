@@ -6,7 +6,7 @@ username = os.getenv("USERNAME")
 password = os.getenv("PASSWORD")
 
 # 登录接口（根据目标网站修改）
-url = "https://example.com/api/login"
+url = "https://www.ttloli.com/wp-login.php"
 
 # 请求体内容（根据接口要求修改）
 data = {
