@@ -2,7 +2,7 @@ name: Daily Auto Login
 
 on:
   schedule:
-    - cron: '5 16 * * *'  # UTC时间16:05 = 北京时间00:05
+    - cron: '0 19 * * *'  # 每天北京时间 03:00
   workflow_dispatch:
 
 jobs:
@@ -23,6 +23,5 @@ jobs:
 
       - name: Run Login Script
         env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+          ACCOUNTS: ${{ secrets.ACCOUNTS }}
         run: python login.py
