@@ -1,23 +1,30 @@
 import requests
 import os
 
-# 获取环境变量中的账号密码（从 GitHub Secrets 注入）
-username = os.getenv("USERNAME")
-password = os.getenv("PASSWORD")
-
-# 登录接口（根据目标网站修改）
+# 登录接口地址（请根据实际网站修改）
 url = "https://www.ttloli.com/wp-login.php"
 
-# 请求体内容（根据接口要求修改）
-data = {
-    "username": username,
-    "password": password
-}
+# 从环境变量获取账号列表
+accounts_raw = os.getenv("ACCOUNTS")
+accounts = accounts_raw.split("|") if accounts_raw else []
 
-# 发起登录请求
-response = requests.post(url, json=data)
+for i, account in enumerate(accounts, 1):
+    try:
+        username, password = account.split(":")
+    except ValueError:
+        print(f"[{i}] 格式错误，跳过：{account}")
+        continue
 
-if response.ok:
-    print("登录成功")
-else:
-    print("登录失败:", response.status_code, response.text)
+    data = {
+        "username": username,
+        "password": password
+    }
+
+    try:
+        response = requests.post(url, json=data)
+        if response.ok:
+            print(f"[{i}] {username} 登录成功")
+        else:
+            print(f"[{i}] {username} 登录失败: {response.status_code} {response.text}")
+    except Exception as e:
+        print(f"[{i}] {username} 登录异常: {e}")
