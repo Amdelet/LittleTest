@@ -1,7 +1,8 @@
 import requests
 import os
 
-url = "https://www.ttloli.com/wp-login.php"
+url = os.getenv("LOGIN_URL")
+website = os.getenv("HOSTNAME")
 accounts_raw = os.getenv("ACCOUNTS")
 accounts = accounts_raw.split("|") if accounts_raw else []
 
@@ -18,7 +19,7 @@ for i, account in enumerate(accounts, 1):
     payload = {
         "log": username,
         "pwd": password,
-        "redirect_to": "https://www.ttloli.com",
+        "redirect_to": website,
         "testcookie": "1"
     }
 
