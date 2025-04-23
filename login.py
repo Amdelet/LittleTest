@@ -3,7 +3,7 @@ import os
 
 # 登录接口地址（请根据实际网站修改）
 url = "https://www.ttloli.com/wp-login.php"
-
+session = requests.Session()
 # 从环境变量获取账号列表
 accounts_raw = os.getenv("ACCOUNTS")
 accounts = accounts_raw.split("|") if accounts_raw else []
@@ -15,16 +15,14 @@ for i, account in enumerate(accounts, 1):
         print(f"[{i}] 格式错误，跳过：{account}")
         continue
 
-    data = {
+    payload = {
         "username": username,
         "password": password
     }
 
     try:
-        response = requests.post(url, data=data, timeout=3)
-        if response.ok:
-            print(f"[{i}] {username} 登录成功")
+        response = requests.session(url, data=payload, timeout=3)
+        if "Logout" in response.text:
+            print(f"[{i}] {username} Login success.")
         else:
-            print(f"[{i}] {username} 登录失败: {response.status_code} {response.text}")
-    except Exception as e:
-        print(f"[{i}] {username} 登录异常: {e}")
+            print(f"[{i}] {username} Login failed.")
