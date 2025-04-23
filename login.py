@@ -7,6 +7,9 @@ url = "https://www.ttloli.com/wp-login.php"
 accounts_raw = os.getenv("ACCOUNTS")
 accounts = accounts_raw.split("|") if accounts_raw else []
 
+session = requests.Session()
+session.get(url)
+
 for i, account in enumerate(accounts, 1):
     try:
         username, password = account.split(":")
@@ -15,15 +18,19 @@ for i, account in enumerate(accounts, 1):
         continue
 
     payload = {
-        "username": username,
-        "password": password
+        "log": username,
+        "pwd": password,
+        "redirect_to": "https://www.ttlloli.com",  # 可选
+        "testcookie": "1"
+    }
+    
+    headers = {
+    "User-Agent": "Mozilla/5.0"
     }
 
     try:
-        session = requests.Session()
-        response = session.post(url, data=payload, timeout=3)  
-        print(response.text)
-        if "Logout" in response.text:
+        response = session.post(url, data=payload, headers=headers)  
+        if "注销" in response.text or "logout" in response.text.lower():
             print(f"[{i}] {username} Login success.")
         else:
             print(f"[{i}] {username} Login failed.")
