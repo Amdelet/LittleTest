@@ -22,7 +22,8 @@ for i, account in enumerate(accounts, 1):
     try:
         session = requests.Session()
         response = session.post(url, data=payload, timeout=3)
-    if "Logout" in response.text:
-        print(f"[{i}] {username} Login success.")
-    else:
-        print(f"[{i}] {username} Login failed.")
+        print(response.text)
+   # if "Logout" in response.text:
+   #     print(f"[{i}] {username} Login success.")
+   # else:
+   #     print(f"[{i}] {username} Login failed.")
