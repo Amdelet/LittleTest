@@ -32,7 +32,10 @@ for i, account in enumerate(accounts, 1):
         response = session.post(url, data=payload, headers=headers)
         if "注销" in response.text or "logout" in response.text.lower():
             print(f"[{i}] {username} Login success.")
+            time.sleep(60)
         else:
             print(f"[{i}] {username} Login failed. 状态码：{response.status_code}")
+            time.sleep(60)
     except Exception as e:
         print(f"[{i}] {username} 出错：{e}")
+        time.sleep(60)
