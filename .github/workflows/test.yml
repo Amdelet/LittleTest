@@ -24,4 +24,6 @@ jobs:
       - name: Run Login Script
         env:
           ACCOUNTS: ${{ secrets.ACCOUNTS }}
+          HOSTNAME : ${{ secrets.HOSTNAME }}
+          LOGIN_URL : ${{ secrets.LOGIN_URL }}
         run: python login.py
