@@ -21,9 +21,8 @@ for i, account in enumerate(accounts, 1):
     }
 
     try:
-        response = requests.post(url, json=data)
+        response = requests.post(url, data=data, timeout=3)
         if response.ok:
-            response = requests.post("https://www.ttloli.com/")
             print(f"[{i}] {username} 登录成功")
         else:
             print(f"[{i}] {username} 登录失败: {response.status_code} {response.text}")
